@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "adminFunctions.c"
-#include "employeeFunctions.c"
 
 
 #define TotalEmp 100
@@ -31,14 +29,20 @@ typedef struct
     char name[20];
     int employeeID;
     char department[20];
+    int salary;
     mnm mnm;
     address address;
 } employee;
 
 employee emp[100];
 
-// Starting Employees
-int i = 1;
+
+#include "adminFunctions.c"
+#include "employeeFunctions.c"
+
+int admin();
+int employeeFunc();
+
 
 int main()
 {
@@ -102,7 +106,7 @@ int main()
             fgets(userPass, PASS, stdin);
             userPass[strcspn(userPass, "\n")] = '\0'; // Replace newline with null
             if (strcmp(userPass, empPass) == 0)
-                employeeFunc();
+                employeeFunc(&emp->mnm.meetings, &emp->mnm.messages);
             else
             {
                 printf("\nYou Entered Wrong Password.");

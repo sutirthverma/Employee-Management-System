@@ -1,6 +1,12 @@
 #define MAX 20
 
-//Admin Landing Page
+void addEmp(int numOfSize, employee emp[]);
+void empDetails(int empID);
+void nullAtEnd(employee emp[], char *dataMemb);
+
+int totalEmps = 1;
+
+// Admin Landing Page
 int admin()
 {
     int option = 0, numOfEmp = 1, id = 1;
@@ -12,39 +18,36 @@ int admin()
     printf("\n(4)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS.");
     printf("\n(5)ADD EMPLOYEES MEETINGS AND MESSAGES.");
     printf("\n(6)LOG OUT.");
-    
 
     printf("\nEnter the respective codes to open the options: ");
     scanf("%d", &option);
 
     if (option >= 1 && option <= 6)
     {
-        switch(option)
+        switch (option)
         {
-            case 1:
-                //Adding Single Employee
-                // addEmp(numOfEmp);
-                break;
-            case 2:
-                //Adding Multiple Employees
-                printf("\nEnter no. of employees you want to enter:");
-                scanf("%d",&numOfEmp);
-                addEmp(numOfEmp);
-                break;
-            case 3:
-                printf("\nEnter Employee ID you want to Search:");
-                scanf("%d",&id);
-                empDetails(id);
-                break;
-            case 4:
-                // viewMulEmp();
-                break;
-            case 5:
-                // addempmsg();
-                break;
-            default:
-                return 0;
-
+        case 1:
+            addEmp(1, emp);
+            break;
+        case 2:
+            // Adding Multiple Employees
+            printf("\nEnter no. of employees you want to enter:");
+            scanf("%d", &numOfEmp);
+            addEmp(numOfEmp, emp);
+            break;
+        case 3:
+            printf("\nEnter Employee ID you want to Search:");
+            scanf("%d", &id);
+            empDetails(id);
+            break;
+        case 4:
+            // viewMulEmp();
+            break;
+        case 5:
+            // addempmsg();
+            break;
+        default:
+            return 0;
         }
     }
     else
@@ -57,46 +60,136 @@ int admin()
 }
 
 //(1)Function to Add Employee/Employees:
-void addEmp(int numOfSize)
+void addEmp(int numOfSize, employee emp[])
 {
+
+    char confirmation;
+
     printf("\nAdmin:");
-    if(numOfSize == 1)
-        printf("\n\nAdd Employee:");
-    else
-        printf("\n\nAdd Employees:");
-
-    for( ; i>=numOfSize; i++)
+    if (numOfSize == 1)
     {
-        printf("\nEnter Name of the Employee: ");
-        fgets(emp[i].name, MAX, stdin);
-        emp[i].name[strcspn(emp[i].name, "\n")] = '\0'; // Replace newline with null
+         printf("\n\nAdd Employee:");
+         getchar();
+    }   
+        
+    else
+    {
+        printf("\n\nAdd Employees:");
+        getchar();
+    }
 
+    for (int j = 1; j <= numOfSize; j++)
+    {
+
+        // Name
+        printf("\nEnter Name of the Employee: ");
+        fgets(emp[totalEmps].name, MAX, stdin);
+        nullAtEnd(emp, "name");
+        // Employee ID
+        printf("\nEnter Employee ID: ");
+        scanf("%d", &emp[totalEmps].employeeID);
+
+        getchar();
+        //Department
+        printf("Eneter Department: ");
+        fgets(emp[totalEmps].department, buff, stdin);
+        nullAtEnd(emp, "department");
+
+        // Salary
+        printf("\nEnter Employee Salary: ");
+        scanf("%d", &emp[totalEmps].salary);
+        getchar();
+
+        //Address
+        printf("\nEnter Address: \nCity: ");
+        fgets(emp[totalEmps].address.city, buff, stdin);
+        nullAtEnd(emp, "city");
+
+        printf("\nState: ");
+        fgets(emp[totalEmps].address.state, buff, stdin);
+        nullAtEnd(emp, "state");
+
+        printf("\nCountry: ");
+        fgets(emp[totalEmps].address.country, buff, stdin);
+        nullAtEnd(emp, "country");
+
+        //GoTo Label for confirmation if entered invalid character
+        confirmationSection:
+        printf("\nPress Y/y To Confirm Or N/n To Cancel: ");
+        scanf("%c", &confirmation);
+        getchar();
+
+        if(confirmation == 'Y'|| confirmation == 'y')
+        {
+        //Increasing strength of employees after entering all the details 
+        totalEmps++;
+        }
+        else if(confirmation == 'N' || confirmation == 'n')
+            break;
+        else
+        {
+            printf("\nEnter a valid confirmation character.");
+            
+            goto confirmationSection;
+        }
     }
 
     admin();
 }
 
+//(2)Viewing Employee Details
 void empDetails(int empID)
 {
 
-    //Binary Search to find empID in employee array
-    int s=1, e=1,j=1;
-    while(s<=e)
+    // //Binary Search to find empID in employee array
+    // int s=1, e=totalEmps-1,j=1;
+    // while(s<=e)
+    // {
+    //     int mid = s+e/2;
+
+    //     if(empID == emp[mid].employeeID)
+    //     {
+    //         j = mid;
+    //         s = e+1;
+    //     }
+
+    //     if(empID > emp[mid].employeeID)
+    //         e = mid;
+    //     else
+    //         s = mid;
+    // }
+    int j;
+    for (j = 1; j < totalEmps; j++)
     {
-        int mid = (s+e)/2;
-
-        if(empID == emp[mid].employeeID)
+        if (emp[j].employeeID == empID)
         {
-            j = mid;
-            s = e+1;
-        } 
-            
+            printf("\nEmployee %d Details:", empID);
+            printf("\n\nName: %s", emp[j].name);
+            printf("\nEmployee ID: %d",empID);
+            printf("\nDepartment: %s", emp[j].department);
+            printf("\nSalary: %d", emp[j].salary);
+            printf("\nMeetings:(%d)",emp[j].mnm.meetings);
+            printf("\nMessages:(%d)",emp[j].mnm.meetings);
+            printf("\nAddress: %s,%s,%s",emp[j].address.city, emp[j].address.state, emp[j].address.country);
 
-        if(empID > emp[mid].employeeID)
-            e = mid;
+            printf("\n\n");
+        }
         else
-            s = mid;
+            printf("\nEnter a valid ID.");
     }
-    printf("\nEmployee %d Details:",empID);
-    printf("\nName: %s",emp[j].name);
+}
+
+// This function is to check and replace newline character from end of the char
+void nullAtEnd(employee emp[], char *dataMemb)
+{
+    if (strcmp(dataMemb, "name") == 0)
+        emp[totalEmps].name[strcspn(emp[totalEmps].name, "\n")] = '\0';
+    else if (strcmp(dataMemb, "department") == 0)
+        emp[totalEmps].department[strcspn(emp[totalEmps].department, "\n")] = '\0';
+    else if (strcmp(dataMemb, "city") == 0)
+        emp[totalEmps].address.city[strcspn(emp[totalEmps].address.city, "\n")] = '\0';
+    else if (strcmp(dataMemb, "state") == 0)
+        emp[totalEmps].address.state[strcspn(emp[totalEmps].address.state, "\n")] = '\0';
+    else if (strcmp(dataMemb, "country") == 0)
+        emp[totalEmps].address.country[strcspn(emp[totalEmps].address.country, "\n")] = '\0';
 }
