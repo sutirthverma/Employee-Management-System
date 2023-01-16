@@ -4,8 +4,9 @@ An Employee Management System is an application that helps in managing and stori
 
 #### Functionalities:
 - [x] Add employee.
-- [x] View Employee details using Employee ID.View All employees list according to department.
-- [ ] Add multiple employees at single time.
+- [x] View Employee details using Employee ID.
+- [ ] View All employees details/list according to department.
+- [X] Add multiple employees at single time.
 - [ ] Edit Employee Details(To-Do)
 - [ ] Delete an Employee
 
