@@ -141,28 +141,16 @@ void addEmp(int numOfSize, employee emp[])
 void empDetails(int empID)
 {
 
-    // //Binary Search to find empID in employee array
-    // int s=1, e=totalEmps-1,j=1;
-    // while(s<=e)
-    // {
-    //     int mid = s+e/2;
-
-    //     if(empID == emp[mid].employeeID)
-    //     {
-    //         j = mid;
-    //         s = e+1;
-    //     }
-
-    //     if(empID > emp[mid].employeeID)
-    //         e = mid;
-    //     else
-    //         s = mid;
-    // }
-    int j;
-    for (j = 1; j < totalEmps; j++)
+    //Binary Search to find empID in employee array
+    int s=1, e=totalEmps-1,j=1;
+    while(s<=e)
     {
-        if (emp[j].employeeID == empID)
+        int mid = s+e/2;
+
+        if(empID == emp[mid].employeeID)
         {
+            j = mid;
+            
             printf("\nEmployee %d Details:", empID);
             printf("\n\nName: %s", emp[j].name);
             printf("\nEmployee ID: %d",empID);
@@ -173,10 +161,20 @@ void empDetails(int empID)
             printf("\nAddress: %s,%s,%s",emp[j].address.city, emp[j].address.state, emp[j].address.country);
 
             printf("\n\n");
+
+            break;
         }
+
+        if(empID > emp[mid].employeeID)
+            e = mid - 1;
         else
-            printf("\nEnter a valid ID.");
+            s = mid + 1;
+
     }
+
+    if(s>e)
+            printf("\nError: Enter a valid ID.\n\n");
+
 }
 
 // This function is to check and replace newline character from end of the char
