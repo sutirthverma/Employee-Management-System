@@ -28,6 +28,7 @@ typedef struct
 {
     char name[20];
     int employeeID;
+    int number;
     char department[20];
     int salary;
     mnm mnm;
