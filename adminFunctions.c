@@ -14,15 +14,16 @@ int admin()
     printf("\nAdmin:");
     printf("\n(1)ADD EMPLOYEE.");
     printf("\n(2)ADD MULTIPLE EMPLOYEES.");
-    printf("\n(3)VIEW EMPLOYEE DETAILS.");
-    printf("\n(4)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS.");
-    printf("\n(5)ADD EMPLOYEES MEETINGS AND MESSAGES.");
-    printf("\n(6)LOG OUT.");
+    printf("\n(3)EDIT EMPLOYEE DETAILS.");
+    printf("\n(4)VIEW EMPLOYEE DETAILS.");
+    printf("\n(5)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS.");
+    printf("\n(6)ADD EMPLOYEES MEETINGS AND MESSAGES.");
+    printf("\n(7)LOG OUT.");
 
     printf("\nEnter the respective codes to open the options: ");
     scanf("%d", &option);
 
-    if (option >= 1 && option <= 6)
+    if (option >= 1 && option <= 7)
     {
         switch (option)
         {
@@ -36,14 +37,19 @@ int admin()
             addEmp(numOfEmp, emp);
             break;
         case 3:
-            printf("\nEnter Employee ID you want to Search:");
+            printf("\nEnter Employee ID you want to Edit:");
             scanf("%d", &id);
             empDetails(id);
             break;
         case 4:
-            // viewMulEmp();
+            printf("\nEnter Employee ID you want to Search:");
+            scanf("%d", &id);
+            empDetails(id);
             break;
         case 5:
+            //viewMulEmp();
+            break;
+        case 6:
             // addempmsg();
             break;
         default:
@@ -85,11 +91,17 @@ void addEmp(int numOfSize, employee emp[])
         printf("\nEnter Name of the Employee: ");
         fgets(emp[totalEmps].name, MAX, stdin);
         nullAtEnd(emp, "name");
+
         // Employee ID
         printf("\nEnter Employee ID: ");
         scanf("%d", &emp[totalEmps].employeeID);
-
         getchar();
+
+        //Mobile Number
+        printf("\nEnter Employee Mobile Number: ");
+        scanf("%d", &emp[totalEmps].number);
+        getchar();
+
         //Department
         printf("Eneter Department: ");
         fgets(emp[totalEmps].department, buff, stdin);
@@ -154,6 +166,7 @@ void empDetails(int empID)
             printf("\nEmployee %d Details:", empID);
             printf("\n\nName: %s", emp[j].name);
             printf("\nEmployee ID: %d",empID);
+            printf("\nMobile Number: %d",emp[j].number);
             printf("\nDepartment: %s", emp[j].department);
             printf("\nSalary: %d", emp[j].salary);
             printf("\nMeetings:(%d)",emp[j].mnm.meetings);
