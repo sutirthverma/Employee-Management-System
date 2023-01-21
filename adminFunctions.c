@@ -3,7 +3,7 @@
 void addEmp(int numOfSize, employee emp[]);
 void empDetails(int empID);
 void editEmpDetails(int empID);
-void nullAtEnd(employee emp[], char *dataMemb);
+void nullAtEnd(employee emp[], char *dataMemb, int empID);
 void confirmationFunc();
 
 int totalEmps = 1;
@@ -93,7 +93,7 @@ void addEmp(int numOfSize, employee emp[])
         // Name
         printf("\nEnter Name of the Employee: ");
         fgets(emp[totalEmps].name, MAX, stdin);
-        nullAtEnd(emp, "name");
+        nullAtEnd(emp, "name", totalEmps);
 
         // Employee ID
         printf("\nEnter Employee ID: ");
@@ -108,7 +108,7 @@ void addEmp(int numOfSize, employee emp[])
         // Department
         printf("Eneter Department: ");
         fgets(emp[totalEmps].department, buff, stdin);
-        nullAtEnd(emp, "department");
+        nullAtEnd(emp, "department", totalEmps);
 
         // Salary
         printf("\nEnter Employee Salary: ");
@@ -118,15 +118,15 @@ void addEmp(int numOfSize, employee emp[])
         // Address
         printf("\nEnter Address: \nCity: ");
         fgets(emp[totalEmps].address.city, buff, stdin);
-        nullAtEnd(emp, "city");
+        nullAtEnd(emp, "city", totalEmps);
 
         printf("\nState: ");
         fgets(emp[totalEmps].address.state, buff, stdin);
-        nullAtEnd(emp, "state");
+        nullAtEnd(emp, "state", totalEmps);
 
         printf("\nCountry: ");
         fgets(emp[totalEmps].address.country, buff, stdin);
-        nullAtEnd(emp, "country");
+        nullAtEnd(emp, "country", totalEmps);
 
         // Using confFunc to confirm a new employee addition
         confirmationFunc();
@@ -172,7 +172,7 @@ void editEmpDetails(int empID)
                 // Name
                 printf("\nEnter Name of the Employee: ");
                 fgets(emp[j].name, MAX, stdin);
-                nullAtEnd(emp, "name");
+                nullAtEnd(emp, "name", j);
                 break;
 
             case 2:
@@ -193,7 +193,7 @@ void editEmpDetails(int empID)
                 // Department
                 printf("Eneter Department: ");
                 fgets(emp[j].department, buff, stdin);
-                nullAtEnd(emp, "department");
+                nullAtEnd(emp, "department", j);
                 break;
 
             case 5:
@@ -207,19 +207,19 @@ void editEmpDetails(int empID)
                 // Address
                 printf("\nEnter City: ");
                 fgets(emp[j].address.city, buff, stdin);
-                nullAtEnd(emp, "city");
+                nullAtEnd(emp, "city", j);
                 break;
 
             case 7:
                 printf("\nEnter State: ");
                 fgets(emp[j].address.state, buff, stdin);
-                nullAtEnd(emp, "state");
+                nullAtEnd(emp, "state", j);
                 break;
 
             case 8:
                 printf("\nEnter Country: ");
                 fgets(emp[j].address.country, buff, stdin);
-                nullAtEnd(emp, "country");
+                nullAtEnd(emp, "country", j);
                 break;
             }
             confirmationFunc();
@@ -276,18 +276,18 @@ void empDetails(int empID)
 }
 
 // This function is to check and replace newline character from end of the char
-void nullAtEnd(employee emp[], char *dataMemb)
+void nullAtEnd(employee emp[], char *dataMemb, int empID)
 {
     if (strcmp(dataMemb, "name") == 0)
-        emp[totalEmps].name[strcspn(emp[totalEmps].name, "\n")] = '\0';
+        emp[empID].name[strcspn(emp[empID].name, "\n")] = '\0';
     else if (strcmp(dataMemb, "department") == 0)
-        emp[totalEmps].department[strcspn(emp[totalEmps].department, "\n")] = '\0';
+        emp[empID].department[strcspn(emp[empID].department, "\n")] = '\0';
     else if (strcmp(dataMemb, "city") == 0)
-        emp[totalEmps].address.city[strcspn(emp[totalEmps].address.city, "\n")] = '\0';
+        emp[empID].address.city[strcspn(emp[empID].address.city, "\n")] = '\0';
     else if (strcmp(dataMemb, "state") == 0)
-        emp[totalEmps].address.state[strcspn(emp[totalEmps].address.state, "\n")] = '\0';
+        emp[empID].address.state[strcspn(emp[empID].address.state, "\n")] = '\0';
     else if (strcmp(dataMemb, "country") == 0)
-        emp[totalEmps].address.country[strcspn(emp[totalEmps].address.country, "\n")] = '\0';
+        emp[empID].address.country[strcspn(emp[empID].address.country, "\n")] = '\0';
 }
 
 // Confirmation Function
