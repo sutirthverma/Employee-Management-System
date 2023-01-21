@@ -28,7 +28,7 @@ typedef struct
 {
     char name[20];
     int employeeID;
-    int number;
+    long int number;
     char department[20];
     int salary;
     mnm mnm;
@@ -41,6 +41,7 @@ employee emp[100];
 #include "adminFunctions.c"
 #include "employeeFunctions.c"
 
+int main();
 int admin();
 int employeeFunc();
 
