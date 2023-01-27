@@ -128,7 +128,7 @@ void addEmp(int numOfSize, employee emp[])
 
         printf("\nState: ");
         fgets(state, buff, stdin);
-        // nullAtEnd("state");
+        nullAtEnd(state);
 
         printf("\nCountry: ");
         fgets(country, buff, stdin);
@@ -149,15 +149,6 @@ void addEmp(int numOfSize, employee emp[])
 
             totalEmps++;
         }
-
-        // printf("Total Emp%d\n", totalEmps);
-
-        // printf("\nTotal Emp after ++%d", totalEmps++);
-
-
-        // printf("Emp ID %d", emp[totalEmps].employeeID);
-
-
     }
 
     admin();
