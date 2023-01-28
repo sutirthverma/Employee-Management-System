@@ -8,7 +8,7 @@ char city[buff], state[buff], country[buff], name[20], department[20];
 void addEmp(int numOfSize, employee emp[]);
 void empDetails(int empID);
 void editEmpDetails(int empID);
-//void nullAtEnd(char *variable);
+void deleteEmp(int empID);
 void nullAtEnd(char *memb);
 int confirmationFunc();
 
@@ -24,14 +24,15 @@ int admin()
     printf("\n(2)ADD MULTIPLE EMPLOYEES.");
     printf("\n(3)EDIT EMPLOYEE DETAILS.");
     printf("\n(4)VIEW EMPLOYEE DETAILS.");
-    printf("\n(5)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS.");
-    printf("\n(6)ADD EMPLOYEES MEETINGS AND MESSAGES.");
-    printf("\n(7)LOG OUT.");
+    printf("\n(5)DELETE EMPLOYEE RECORD.");
+    printf("\n(6)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS.");
+    printf("\n(7)ADD EMPLOYEES MEETINGS AND MESSAGES.");
+    printf("\n(8)LOG OUT.");
 
     printf("\nEnter the respective codes to open the options: ");
     scanf("%d", &option);
 
-    if (option >= 1 && option <= 7)
+    if (option >= 1 && option <= 8)
     {
         switch (option)
         {
@@ -55,9 +56,14 @@ int admin()
             empDetails(id);
             break;
         case 5:
-            // viewMulEmp();
+            printf("\nEnter Employee ID you want to Delete:");
+            scanf("%d", &id);
+            deleteEmp(id);
             break;
         case 6:
+
+            break;
+        case 7: 
             // addempmsg();
             break;
         default:
@@ -70,7 +76,7 @@ int admin()
         admin();
     }
 
-    if (option == 7)
+    if (option == 8)
         return 0;
 
     admin();
@@ -159,7 +165,7 @@ void editEmpDetails(int empID)
 {
 
     // Binary Search to find empID in employee array
-    int s = 0, e = totalEmps, j = 0;
+    int s = 0, e = totalEmps;
     while (s <= e)
     {
         int mid = s + e / 2;
@@ -167,8 +173,6 @@ void editEmpDetails(int empID)
 
         if (empID == emp[mid].employeeID)
         {
-            j = mid;
-
             // Calling view employee details function to get reference to what to edit
             empDetails(empID);
 
@@ -190,54 +194,54 @@ void editEmpDetails(int empID)
             case 1:
                 // Name
                 printf("\nEnter Name of the Employee: ");
-                fgets(emp[j].name, MAX, stdin);
+                fgets(emp[mid].name, MAX, stdin);
                 nullAtEnd(name);
                 break;
 
             case 2:
                 // Employee ID
                 printf("\nEnter Employee ID: ");
-                scanf("%d", &emp[j].employeeID);
+                scanf("%d", &emp[mid].employeeID);
                 getchar();
                 break;
 
             case 3:
                 // Mobile Number
                 printf("\nEnter Employee Mobile Number: ");
-                scanf("%ld", &emp[j].number);
+                scanf("%ld", &emp[mid].number);
                 getchar();
                 break;
 
             case 4:
                 // Department
                 printf("Eneter Department: ");
-                fgets(emp[j].department, buff, stdin);
+                fgets(emp[mid].department, buff, stdin);
                 nullAtEnd(department);
                 break;
 
             case 5:
                 // Salary
                 printf("\nEnter Employee Salary: ");
-                scanf("%d", &emp[j].salary);
+                scanf("%d", &emp[mid].salary);
                 getchar();
                 break;
 
             case 6:
                 // Address
                 printf("\nEnter City: ");
-                fgets(emp[j].address.city, buff, stdin);
+                fgets(emp[mid].address.city, buff, stdin);
                 nullAtEnd(city);
                 break;
 
             case 7:
                 printf("\nEnter State: ");
-                fgets(emp[j].address.state, buff, stdin);
+                fgets(emp[mid].address.state, buff, stdin);
                 nullAtEnd(state);
                 break;
 
             case 8:
                 printf("\nEnter Country: ");
-                fgets(emp[j].address.country, buff, stdin);
+                fgets(emp[mid].address.country, buff, stdin);
                 nullAtEnd(country);
                 break;
             }
@@ -260,28 +264,81 @@ void empDetails(int empID)
 {
 
     // Binary Search to find empID in employee array
-    int s = 0, e = totalEmps, j = 0;
+    int s = 0, e = totalEmps-1;
     while (s <= e)
     {
         int mid = s + e / 2;
 
         if (empID == emp[mid].employeeID)
         {
-            j = mid;
-
             printf("\nEmployee %d Details:", empID);
-            printf("\n\nName: %s", emp[j].name);
+            printf("\n\nName: %s", emp[mid].name);
             printf("\nEmployee ID: %d", empID);
-            printf("\nMobile Number: %ld", emp[j].number);
-            printf("\nDepartment: %s", emp[j].department);
-            printf("\nSalary: %d", emp[j].salary);
-            printf("\nMeetings:(%d)", emp[j].mnm.meetings);
-            printf("\nMessages:(%d)", emp[j].mnm.meetings);
-            printf("\nAddress: %s,%s,%s", emp[j].address.city, emp[j].address.state, emp[j].address.country);
+            printf("\nMobile Number: %ld", emp[mid].number);
+            printf("\nDepartment: %s", emp[mid].department);
+            printf("\nSalary: %d", emp[mid].salary);
+            printf("\nMeetings:(%d)", emp[mid].mnm.meetings);
+            printf("\nMessages:(%d)", emp[mid].mnm.meetings);
+            printf("\nAddress: %s,%s,%s", emp[mid].address.city, emp[mid].address.state, emp[mid].address.country);
 
             printf("\n\n");
 
             break;
+        }
+
+        if (empID > emp[mid].employeeID)
+            e = mid - 1;
+        else
+            s = mid + 1;
+    }
+
+    if (s > e)
+        printf("\nError: Enter a valid ID.\n\n");
+}
+
+//(5) Delete Employee Details
+// void deleteEmp(int empID)
+// {
+//     int s = 0, e = totalEmps-1;
+//     while (s <= e)
+//     {
+//         int mid = s + e / 2;
+//         if (empID == emp[mid].employeeID)
+//         {
+//             empDetails(empID);
+
+//             printf("\nDeleted the above employee record.");
+//             for(int i=mid; i <totalEmps-1; i++)
+//                     emp[i] = emp[i+1];
+                
+//             totalEmps--;
+//             return;
+//         }
+
+//         if(empID > emp[mid].employeeID)
+//             s = mid + 1;
+//         else 
+//             e = mid - 1;
+//     }
+// }
+
+
+
+//Other Functions
+
+//This function is to search for employee entered in various admin functions
+int employeeSearch(int empID)
+{
+    // Binary Search to find empID in employee array
+    int s = 0, e = totalEmps, j = 0;
+    while (s <= e)
+    {
+        int mid = s + e / 2;
+        int editOpt;
+
+        if (empID == emp[mid].employeeID)
+        {
+            return mid;            
         }
 
         if (empID > emp[mid].employeeID)
@@ -319,4 +376,6 @@ int confirmationFunc()
         printf("\nEnter a valid confirmation character.");
         goto confirmationSection;
     }
+    else
+        return 1;
 }
