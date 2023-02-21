@@ -1,11 +1,12 @@
 #define MAX 20
 
-//Global variables for adding and editing employees names
+// Global variables for adding and editing employees names
 int employeeID, salary, messages, meetings;
 long int number;
 char city[buff], state[buff], country[buff], name[20], department[20];
 
 void addEmp(int numOfSize, employee emp[]);
+int employeeSearch(int empID);
 void empDetails(int empID);
 void editEmpDetails(int empID);
 void deleteEmp(int empID);
@@ -63,7 +64,7 @@ int admin()
         case 6:
 
             break;
-        case 7: 
+        case 7:
             // addempmsg();
             break;
         default:
@@ -138,14 +139,13 @@ void addEmp(int numOfSize, employee emp[])
 
         printf("\nCountry: ");
         fgets(country, buff, stdin);
-        nullAtEnd(country);      
-
+        nullAtEnd(country);
 
         // Using confFunc to confirm a new employee addition
-        if(confirmationFunc() == 0)
+        if (confirmationFunc() == 0)
         {
             strcpy(emp[totalEmps].name, name);
-            emp[totalEmps].employeeID =  employeeID;
+            emp[totalEmps].employeeID = employeeID;
             emp[totalEmps].number = number;
             emp[totalEmps].salary = salary;
             strcpy(emp[totalEmps].department, department);
@@ -165,98 +165,85 @@ void editEmpDetails(int empID)
 {
 
     // Binary Search to find empID in employee array
-    int s = 0, e = totalEmps;
-    while (s <= e)
+    int id = employeeSearch(empID);
+    int editOpt;
+
+    if (empID == emp[id].employeeID)
     {
-        int mid = s + e / 2;
-        int editOpt;
+        // Calling view employee details function to get reference to what to edit
+        empDetails(empID);
 
-        if (empID == emp[mid].employeeID)
+        printf("\n(1)EDIT NAME.");
+        printf("\n(2)EDIT EMPLOYEE ID.");
+        printf("\n(3)EDIT MOBILE NUMBER.");
+        printf("\n(4)EDIT DEPARTMENT.");
+        printf("\n(5)EDIT SALARY.");
+        printf("\n(6)EDIT CITY.");
+        printf("\n(7)EDIT STATE.");
+        printf("\n(8)EDIT COUNTRY.");
+        printf("\n(9)GO BACK.");
+        printf("\nEnter the respective codes to edit the detail: ");
+        scanf("%d", &editOpt);
+        getchar();
+
+        switch (editOpt)
         {
-            // Calling view employee details function to get reference to what to edit
-            empDetails(empID);
+        case 1:
+            // Name
+            printf("\nEnter Name of the Employee: ");
+            fgets(emp[id].name, MAX, stdin);
+            nullAtEnd(name);
+            break;
 
-            printf("\n(1)EDIT NAME.");
-            printf("\n(2)EDIT EMPLOYEE ID.");
-            printf("\n(3)EDIT MOBILE NUMBER.");
-            printf("\n(4)EDIT DEPARTMENT.");
-            printf("\n(5)EDIT SALARY.");
-            printf("\n(6)EDIT CITY.");
-            printf("\n(7)EDIT STATE.");
-            printf("\n(8)EDIT COUNTRY.");
-            printf("\n(9)GO BACK.");
-            printf("\nEnter the respective codes to edit the detail: ");
-            scanf("%d", &editOpt);
+        case 2:
+            // Employee ID
+            printf("\nEnter Employee ID: ");
+            scanf("%d", &emp[id].employeeID);
             getchar();
+            break;
 
-            switch (editOpt)
-            {
-            case 1:
-                // Name
-                printf("\nEnter Name of the Employee: ");
-                fgets(emp[mid].name, MAX, stdin);
-                nullAtEnd(name);
-                break;
+        case 3:
+            // Mobile Number
+            printf("\nEnter Employee Mobile Number: ");
+            scanf("%ld", &emp[id].number);
+            getchar();
+            break;
 
-            case 2:
-                // Employee ID
-                printf("\nEnter Employee ID: ");
-                scanf("%d", &emp[mid].employeeID);
-                getchar();
-                break;
+        case 4:
+            // Department
+            printf("Eneter Department: ");
+            fgets(emp[id].department, buff, stdin);
+            nullAtEnd(department);
+            break;
 
-            case 3:
-                // Mobile Number
-                printf("\nEnter Employee Mobile Number: ");
-                scanf("%ld", &emp[mid].number);
-                getchar();
-                break;
+        case 5:
+            // Salary
+            printf("\nEnter Employee Salary: ");
+            scanf("%d", &emp[id].salary);
+            getchar();
+            break;
 
-            case 4:
-                // Department
-                printf("Eneter Department: ");
-                fgets(emp[mid].department, buff, stdin);
-                nullAtEnd(department);
-                break;
+        case 6:
+            // Address
+            printf("\nEnter City: ");
+            fgets(emp[id].address.city, buff, stdin);
+            nullAtEnd(city);
+            break;
 
-            case 5:
-                // Salary
-                printf("\nEnter Employee Salary: ");
-                scanf("%d", &emp[mid].salary);
-                getchar();
-                break;
+        case 7:
+            printf("\nEnter State: ");
+            fgets(emp[id].address.state, buff, stdin);
+            nullAtEnd(state);
+            break;
 
-            case 6:
-                // Address
-                printf("\nEnter City: ");
-                fgets(emp[mid].address.city, buff, stdin);
-                nullAtEnd(city);
-                break;
-
-            case 7:
-                printf("\nEnter State: ");
-                fgets(emp[mid].address.state, buff, stdin);
-                nullAtEnd(state);
-                break;
-
-            case 8:
-                printf("\nEnter Country: ");
-                fgets(emp[mid].address.country, buff, stdin);
-                nullAtEnd(country);
-                break;
-            }
-            confirmationFunc();
+        case 8:
+            printf("\nEnter Country: ");
+            fgets(emp[id].address.country, buff, stdin);
+            nullAtEnd(country);
             break;
         }
-
-        if (empID > emp[mid].employeeID)
-            e = mid - 1;
-        else
-            s = mid + 1;
+        confirmationFunc();
     }
-
-    if (s > e)
-        printf("\nError: Enter a valid ID.\n\n");
 }
 
 //(4)Viewing Employee Details
@@ -264,69 +251,44 @@ void empDetails(int empID)
 {
 
     // Binary Search to find empID in employee array
-    int s = 0, e = totalEmps-1;
-    while (s <= e)
+    int id = employeeSearch(empID);
+
+    if (empID == emp[id].employeeID)
     {
-        int mid = s + e / 2;
+        printf("\nEmployee %d Details:", empID);
+        printf("\n\nName: %s", emp[id].name);
+        printf("\nEmployee ID: %d", empID);
+        printf("\nMobile Number: %ld", emp[id].number);
+        printf("\nDepartment: %s", emp[id].department);
+        printf("\nSalary: %d", emp[id].salary);
+        printf("\nMeetings:(%d)", emp[id].mnm.meetings);
+        printf("\nMessages:(%d)", emp[id].mnm.meetings);
+        printf("\nAddress: %s,%s,%s", emp[id].address.city, emp[id].address.state, emp[id].address.country);
 
-        if (empID == emp[mid].employeeID)
-        {
-            printf("\nEmployee %d Details:", empID);
-            printf("\n\nName: %s", emp[mid].name);
-            printf("\nEmployee ID: %d", empID);
-            printf("\nMobile Number: %ld", emp[mid].number);
-            printf("\nDepartment: %s", emp[mid].department);
-            printf("\nSalary: %d", emp[mid].salary);
-            printf("\nMeetings:(%d)", emp[mid].mnm.meetings);
-            printf("\nMessages:(%d)", emp[mid].mnm.meetings);
-            printf("\nAddress: %s,%s,%s", emp[mid].address.city, emp[mid].address.state, emp[mid].address.country);
-
-            printf("\n\n");
-
-            break;
-        }
-
-        if (empID > emp[mid].employeeID)
-            e = mid - 1;
-        else
-            s = mid + 1;
+        printf("\n\n");
     }
-
-    if (s > e)
-        printf("\nError: Enter a valid ID.\n\n");
 }
 
 //(5) Delete Employee Details
 void deleteEmp(int empID)
 {
-    int s = 0, e = totalEmps-1;
-    while (s <= e)
+    int id = employeeSearch(empID);
+    if (empID == emp[id].employeeID)
     {
-        int mid = s + e / 2;
-        if (empID == emp[mid].employeeID)
-        {
-            empDetails(empID);
+        empDetails(empID);
 
-            printf("\nDeleted the above employee record.");
-            for(int i=mid; i <totalEmps-1; i++)
-                    emp[i] = emp[i+1];
-                
-            totalEmps--;
-            return;
-        }
+        printf("\nDeleted the above employee record.");
+        for (int i = id; i < totalEmps - 1; i++)
+            emp[i] = emp[i + 1];
 
-        if(empID > emp[mid].employeeID)
-            s = mid + 1;
-        else 
-            e = mid - 1;
+        totalEmps--;
+        return;
     }
 }
 
+// Other Functions
 
-
-//Other Functions
-
-//This function is to search for employee entered in various admin functions
+// This function is to search for employee entered in various admin functions
 int employeeSearch(int empID)
 {
     // Binary Search to find empID in employee array
@@ -338,7 +300,7 @@ int employeeSearch(int empID)
 
         if (empID == emp[mid].employeeID)
         {
-            return mid;            
+            return mid;
         }
 
         if (empID > emp[mid].employeeID)
@@ -354,7 +316,7 @@ int employeeSearch(int empID)
 // This function is to check and replace newline character from end of the char
 void nullAtEnd(char *memb)
 {
-    memb[strlen(memb)-1] = '\0';
+    memb[strlen(memb) - 1] = '\0';
 }
 
 // Confirmation Function
@@ -362,14 +324,13 @@ void nullAtEnd(char *memb)
 int confirmationFunc()
 {
     char confirmation;
-    // GoTo Label for confirmation if entered invalid character
-    confirmationSection:
+// GoTo Label for confirmation if entered invalid character
+confirmationSection:
     printf("\nPress Y/y To Confirm Or N/n To Cancel: ");
     scanf("%c", &confirmation);
     getchar();
 
-
-    if(confirmation == 'Y' || confirmation == 'y')
+    if (confirmation == 'Y' || confirmation == 'y')
         return 0;
     else if (confirmation != 'N' && confirmation != 'n')
     {
