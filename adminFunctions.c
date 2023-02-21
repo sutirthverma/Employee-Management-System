@@ -297,30 +297,30 @@ void empDetails(int empID)
 }
 
 //(5) Delete Employee Details
-// void deleteEmp(int empID)
-// {
-//     int s = 0, e = totalEmps-1;
-//     while (s <= e)
-//     {
-//         int mid = s + e / 2;
-//         if (empID == emp[mid].employeeID)
-//         {
-//             empDetails(empID);
+void deleteEmp(int empID)
+{
+    int s = 0, e = totalEmps-1;
+    while (s <= e)
+    {
+        int mid = s + e / 2;
+        if (empID == emp[mid].employeeID)
+        {
+            empDetails(empID);
 
-//             printf("\nDeleted the above employee record.");
-//             for(int i=mid; i <totalEmps-1; i++)
-//                     emp[i] = emp[i+1];
+            printf("\nDeleted the above employee record.");
+            for(int i=mid; i <totalEmps-1; i++)
+                    emp[i] = emp[i+1];
                 
-//             totalEmps--;
-//             return;
-//         }
+            totalEmps--;
+            return;
+        }
 
-//         if(empID > emp[mid].employeeID)
-//             s = mid + 1;
-//         else 
-//             e = mid - 1;
-//     }
-// }
+        if(empID > emp[mid].employeeID)
+            s = mid + 1;
+        else 
+            e = mid - 1;
+    }
+}
 
 
 
