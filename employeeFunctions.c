@@ -11,15 +11,38 @@ int employeeFunc(int *message, int *meeting)
         else
             printf("Alert: You have (%d)meeting and (%d)message alert.", *meeting, *message);
     }
-}
-//     printf("\n(1)ADD EMPLOYEE");
-//     // addEmp();
-//     printf("\n(2)VIEW EMPLOYEE DETAILS:");
-//     // viewEmp(emp empID);
-//     printf("\n(3)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS:");
-//     // allEmp(emp department);
-//     printf("\n(4)ADD EMPLOYEES MEETINGS AND NOTICES:");
-//     // meetORnot();
 
-//     return 0;
-// }
+    int option = 0;
+    printf("\n\n(1)VIEW YOUR INFORMATION");
+    printf("\n(2)VIEW MESSAGES.");
+    printf("\n(3)VIEW MEETINGS.");
+    printf("\n(4)SEND MESSAGE.");
+    printf("\n(5)LOG OUT.");
+
+    printf("\nEnter the respective codes to open the options: ");
+    scanf("%d", &option);
+
+    if (option >= 1 && option <= 5)
+    {
+        switch (option)
+        {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        default:
+            return 0;
+        }
+    }
+    else
+    {
+        printf("\nYou entered invalid code.");
+        admin();
+    }
+
+    employeeFunc(message, meeting);
+}

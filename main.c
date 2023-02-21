@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 #define TotalEmp 100
 #define buff 20
 #define PASS 20
@@ -15,12 +14,12 @@ typedef struct
     char country[buff];
 } address;
 
-//Meeting and Messages
+// Meeting and Messages
 typedef struct
 {
     int meetings;
     int messages;
-}mnm;
+} mnm;
 
 // Parent Structure ->
 // Employee Main Structure
@@ -37,14 +36,12 @@ typedef struct
 
 employee emp[100];
 
-
 #include "adminFunctions.c"
 #include "employeeFunctions.c"
 
 int main();
 int admin();
 int employeeFunc();
-
 
 int main()
 {
@@ -90,10 +87,10 @@ int main()
             fgets(userPass, PASS, stdin);
             userPass[strcspn(userPass, "\n")] = '\0'; // Replace newline with null
             if (strcmp(userPass, adminPass) == 0)
-             {
+            {
                 admin();
                 main();
-             }
+            }
             else
             {
                 printf("\nYou Entered Wrong Password.");
@@ -108,7 +105,10 @@ int main()
             fgets(userPass, PASS, stdin);
             userPass[strcspn(userPass, "\n")] = '\0'; // Replace newline with null
             if (strcmp(userPass, empPass) == 0)
+            {
                 employeeFunc(&emp->mnm.meetings, &emp->mnm.messages);
+                main();
+            }
             else
             {
                 printf("\nYou Entered Wrong Password.");
