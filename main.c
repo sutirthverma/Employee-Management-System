@@ -37,25 +37,22 @@ typedef struct
 employee emp[100];
 
 #include "adminFunctions.c"
-#include "employeeFunctions.c"
 
 int main();
 int admin();
-int employeeFunc();
 
 int main()
 {
     int loginNum;
     char adminPass[PASS] = "admin123";
-    char empPass[PASS] = "employee123";
     char userPass[PASS];
     char password[20];
     static int chances = 3;
 
     // Landing Section
     printf("\nEmployee Management System:\n");
-    printf("(1)Admin Login\n(2)Employee Login\n");
-    printf("\n\nEnter [1] for Admin Login or Enter [2] for Employee Login");
+    printf("(1)Admin Login");
+    printf("\n\nEnter [1] for Admin Login");
     if (chances != 3)
         printf("[Chances Left - %d:]", chances);
     else
@@ -89,24 +86,6 @@ int main()
             if (strcmp(userPass, adminPass) == 0)
             {
                 admin();
-                main();
-            }
-            else
-            {
-                printf("\nYou Entered Wrong Password.");
-                main();
-            }
-        }
-        // Employee Login
-        else
-        {
-            printf("\nEnter Employee Password: ");
-            getchar();
-            fgets(userPass, PASS, stdin);
-            userPass[strcspn(userPass, "\n")] = '\0'; // Replace newline with null
-            if (strcmp(userPass, empPass) == 0)
-            {
-                employeeFunc(&emp->mnm.meetings, &emp->mnm.messages);
                 main();
             }
             else
