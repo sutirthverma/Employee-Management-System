@@ -14,6 +14,7 @@ void nullAtEnd(char *memb);
 int confirmationFunc();
 
 int totalEmps = 0;
+int empsIDs = 1;
 
 // Admin Landing Page
 int admin()
@@ -27,7 +28,6 @@ int admin()
     printf("\n(4)VIEW EMPLOYEE DETAILS.");
     printf("\n(5)DELETE EMPLOYEE RECORD.");
     printf("\n(6)VIEW EMPLOYEES DETAILS ACCORIDING TO DEPARTMENTS.");
-    printf("\n(7)ADD EMPLOYEES MEETINGS AND MESSAGES.");
     printf("\n(8)LOG OUT.");
 
     printf("\nEnter the respective codes to open the options: ");
@@ -109,9 +109,7 @@ void addEmp(int numOfSize, employee emp[])
         nullAtEnd(name);
 
         // Employee ID
-        printf("\nEnter Employee ID: ");
-        scanf("%d", &employeeID);
-        getchar();
+        printf("\nEmployee ID: %d", empsIDs);
 
         // Mobile Number
         printf("\nEnter Employee Mobile Number: ");
@@ -145,7 +143,8 @@ void addEmp(int numOfSize, employee emp[])
         if (confirmationFunc() == 0)
         {
             strcpy(emp[totalEmps].name, name);
-            emp[totalEmps].employeeID = employeeID;
+            emp[totalEmps].employeeID = empsIDs;
+            empsIDs++;
             emp[totalEmps].number = number;
             emp[totalEmps].salary = salary;
             strcpy(emp[totalEmps].department, department);
@@ -174,14 +173,13 @@ void editEmpDetails(int empID)
         empDetails(empID);
 
         printf("\n(1)EDIT NAME.");
-        printf("\n(2)EDIT EMPLOYEE ID.");
-        printf("\n(3)EDIT MOBILE NUMBER.");
-        printf("\n(4)EDIT DEPARTMENT.");
-        printf("\n(5)EDIT SALARY.");
-        printf("\n(6)EDIT CITY.");
-        printf("\n(7)EDIT STATE.");
-        printf("\n(8)EDIT COUNTRY.");
-        printf("\n(9)GO BACK.");
+        printf("\n(2)EDIT MOBILE NUMBER.");
+        printf("\n(3)EDIT DEPARTMENT.");
+        printf("\n(4)EDIT SALARY.");
+        printf("\n(5)EDIT CITY.");
+        printf("\n(6)EDIT STATE.");
+        printf("\n(7)EDIT COUNTRY.");
+        printf("\n(8)GO BACK.");
         printf("\nEnter the respective codes to edit the detail: ");
         scanf("%d", &editOpt);
         getchar();
@@ -196,47 +194,40 @@ void editEmpDetails(int empID)
             break;
 
         case 2:
-            // Employee ID
-            printf("\nEnter Employee ID: ");
-            scanf("%d", &emp[id].employeeID);
-            getchar();
-            break;
-
-        case 3:
             // Mobile Number
             printf("\nEnter Employee Mobile Number: ");
             scanf("%ld", &emp[id].number);
             getchar();
             break;
 
-        case 4:
+        case 3:
             // Department
             printf("Eneter Department: ");
             fgets(emp[id].department, buff, stdin);
             nullAtEnd(department);
             break;
 
-        case 5:
+        case 4:
             // Salary
             printf("\nEnter Employee Salary: ");
             scanf("%d", &emp[id].salary);
             getchar();
             break;
 
-        case 6:
+        case 5:
             // Address
             printf("\nEnter City: ");
             fgets(emp[id].address.city, buff, stdin);
             nullAtEnd(city);
             break;
 
-        case 7:
+        case 6:
             printf("\nEnter State: ");
             fgets(emp[id].address.state, buff, stdin);
             nullAtEnd(state);
             break;
 
-        case 8:
+        case 7:
             printf("\nEnter Country: ");
             fgets(emp[id].address.country, buff, stdin);
             nullAtEnd(country);
@@ -261,8 +252,6 @@ void empDetails(int empID)
         printf("\nMobile Number: %ld", emp[id].number);
         printf("\nDepartment: %s", emp[id].department);
         printf("\nSalary: %d", emp[id].salary);
-        printf("\nMeetings:(%d)", emp[id].mnm.meetings);
-        printf("\nMessages:(%d)", emp[id].mnm.meetings);
         printf("\nAddress: %s,%s,%s", emp[id].address.city, emp[id].address.state, emp[id].address.country);
 
         printf("\n\n");

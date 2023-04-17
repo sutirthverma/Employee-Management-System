@@ -14,13 +14,6 @@ typedef struct
     char country[buff];
 } address;
 
-// Meeting and Messages
-typedef struct
-{
-    int meetings;
-    int messages;
-} mnm;
-
 // Parent Structure ->
 // Employee Main Structure
 typedef struct
@@ -30,7 +23,6 @@ typedef struct
     long int number;
     char department[20];
     int salary;
-    mnm mnm;
     address address;
 } employee;
 
@@ -51,8 +43,8 @@ int main()
 
     // Landing Section
     printf("\nEmployee Management System:\n");
-    printf("(1)Admin Login");
-    printf("\n\nEnter [1] for Admin Login");
+    printf("(1)Admin Login\n(2)Exit");
+    printf("\n\nEnter [1] for Admin Login or [2] to exit");
     if (chances != 3)
         printf("[Chances Left - %d:]", chances);
     else
@@ -94,6 +86,9 @@ int main()
                 main();
             }
         }
+
+        if(loginNum == 2)
+            return 0;
     }
     return 0;
 }
